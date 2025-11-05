@@ -3,6 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <title>XML Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- jQuery to help make some magic happen -->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -22,95 +23,95 @@
 <body>
 <script type="text/javascript">
 
-	function handleFileSelect(evt) {
-		var file = evt.target.files[0];
-		fr = new FileReader();
-		fr.onload = receivedText;
-		fr.readAsText(file);
+    function handleFileSelect(evt) {
+        var file = evt.target.files[0];
+        fr = new FileReader();
+        fr.onload = receivedText;
+        fr.readAsText(file);
     }       
 
-	function receivedText() { 
-		var docContents = new Array();
-		var text = fr.result.replace('&#5', '\&\#5');
-		$xml = $( $.parseXML( text ) );
-		$xml.find("sms").each(function(){
-			var var_name = $(this).attr("contact_name");
-			if(!var_name || var_name == "(Unknown)") var_name = $(this).attr("address").replace('+1', '');
-			var temp = $.grep(docContents, function (e) { 
-				return e.name == var_name; 
-			});
-			if( temp.length ) {
-				temp[0].texts.push({ 	readable_date: $(this).attr("readable_date"),
-										address: $(this).attr("address"),
-										body: $(this).attr("body"),
-										date: $(this).attr("date"),
-										type: parseInt($(this).attr("type"))
-									});
-			}
-			else {
-				docContents.push(
-					{ 
-						name: var_name,
-						texts: [{	
-									readable_date: $(this).attr("readable_date"),
-									address: $(this).attr("address"),
-									body: $(this).attr("body"),
-									date: $(this).attr("date"),
-									type: parseInt($(this).attr("type"))
-								}]
-					}					
-				);
-			}
-		});
-		
-		// Sort 
-		docContents.sort(function(a, b) {
-			return parseFloat(b.texts[b.texts.length - 1].date) - parseFloat(a.texts[a.texts.length - 1].date);
-		});	
-		
-		// Form the group
-		var html = '<h3>Text Messages</h3><div class="panel-group" id="accordion">';
-		
-		$.each(docContents, function(personIndex, personObject){
-			// Start the group member, label with the name
-			html += '<div class="panel panel-default"><div class="panel-heading">' +
-				'<h4 class="panel-title"><a data-target="#collapse' + personIndex + 
-				'" data-toggle="collapse" data-parent="#accordion">' +
-				personObject.name + ' - ' + personObject.texts.length + '</a></h4></div><div id="collapse' + 
-				personIndex + '" class="panel-collapse collapse"><div class="panel-body">' + 
-				'<table class="table table-bordered table-condensed table-striped" >' + 
-				'<tr><th>Date</th><th>Status</th><th>Message</th></tr>';
-			
-			//Populate the texts
-			$.each(personObject.texts, function(textIndex, textObject) {
-				var status;
-				if (textObject.type == 1) status = "Received";
-				else if (textObject.type == 2) status = "Sent";
-				else status = "Other";
-				
- 				html += '<tr><td class="messageDateCell">' + textObject.readable_date + 
-				'</td><td>' + status + '</td><td>' + textObject.body + '</td></tr>';
-			});
-			
-			//Finish the group member
-			html += '<tr><td colspan="3"><a data-target="#collapse' + personIndex + '" data-toggle="collapse" data-parent="#accordion">' +
-				'Close</a></td></tr></table></div></div></div>';
-		});
-		
-		// Finish the group
-		html += '</div>';
-		$("#content").html(html);	
-		
-	}
+    function receivedText() { 
+        var docContents = new Array();
+        var text = fr.result.replace('&#5', '\&\#5');
+        $xml = $( $.parseXML( text ) );
+        $xml.find("sms").each(function(){
+            var var_name = $(this).attr("contact_name");
+            if(!var_name || var_name == "(Unknown)") var_name = $(this).attr("address").replace('+1', '');
+            var temp = $.grep(docContents, function (e) { 
+                return e.name == var_name; 
+            });
+            if( temp.length ) {
+                temp[0].texts.push({    readable_date: $(this).attr("readable_date"),
+                                        address: $(this).attr("address"),
+                                        body: $(this).attr("body"),
+                                        date: $(this).attr("date"),
+                                        type: parseInt($(this).attr("type"))
+                                    });
+            }
+            else {
+                docContents.push(
+                    { 
+                        name: var_name,
+                        texts: [{   
+                                    readable_date: $(this).attr("readable_date"),
+                                    address: $(this).attr("address"),
+                                    body: $(this).attr("body"),
+                                    date: $(this).attr("date"),
+                                    type: parseInt($(this).attr("type"))
+                                }]
+                    }                   
+                );
+            }
+        });
+        
+        // Sort 
+        docContents.sort(function(a, b) {
+            return parseFloat(b.texts[b.texts.length - 1].date) - parseFloat(a.texts[a.texts.length - 1].date);
+        }); 
+        
+        // Form the group
+        var html = '<h3>Text Messages</h3><div class="panel-group" id="accordion">';
+        
+        $.each(docContents, function(personIndex, personObject){
+            // Start the group member, label with the name
+            html += '<div class="panel panel-default"><div class="panel-heading">' +
+                '<h4 class="panel-title"><a data-target="#collapse' + personIndex + 
+                '" data-toggle="collapse" data-parent="#accordion">' +
+                personObject.name + ' - ' + personObject.texts.length + '</a></h4></div><div id="collapse' + 
+                personIndex + '" class="panel-collapse collapse"><div class="panel-body">' + 
+                '<table class="table table-bordered table-condensed table-striped" >' + 
+                '<tr><th>Date</th><th>Status</th><th>Message</th></tr>';
+            
+            //Populate the texts
+            $.each(personObject.texts, function(textIndex, textObject) {
+                var status;
+                if (textObject.type == 1) status = "Received";
+                else if (textObject.type == 2) status = "Sent";
+                else status = "Other";
+                
+                html += '<tr><td class="messageDateCell">' + textObject.readable_date + 
+                '</td><td>' + status + '</td><td>' + textObject.body + '</td></tr>';
+            });
+            
+            //Finish the group member
+            html += '<tr><td colspan="3"><a data-target="#collapse' + personIndex + '" data-toggle="collapse" data-parent="#accordion">' +
+                'Close</a></td></tr></table></div></div></div>';
+        });
+        
+        // Finish the group
+        html += '</div>';
+        $("#content").html(html);   
+        
+    }
 
-	$(document).ready(function(){
-		$("#xml-file").change(handleFileSelect);
-		$( "#accordion" ).accordion({ collapsible: true });
-	});
+    $(document).ready(function(){
+        $("#xml-file").change(handleFileSelect);
+        $( "#accordion" ).accordion({ collapsible: true });
+    });
 </script>
 <input type="file" id="xml-file" name="files" />
 <div id="content">
-	
+    
 </div>
 </body>
 </html>
