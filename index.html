@@ -67,10 +67,16 @@
         // Sort 
         docContents.sort(function(a, b) {
             let checkIfNumber = /^[0-9+]+$/; //正規表現、終始半角数字で1文字以上の文字列を示す
-            if ( checkIfNumber.test(a.name) ) {
+            if ( checkIfNumber.test(a.name) && ! checkIfNumber.test(b.name) ) {
                 return 1;
             }
-            if ( checkIfNumber.test(b.name) ) {
+            if ( ! checkIfNumber.test(a.name) && checkIfNumber.test(b.name) ) {
+                return -1;
+            }
+            if ( a.texts.length - b.texts.length < 0 ) {
+                return 1;
+            }
+            if ( a.texts.length - b.texts.length > 0 ) {
                 return -1;
             }
             return parseFloat(b.texts[b.texts.length - 1].date) - parseFloat(a.texts[a.texts.length - 1].date);
