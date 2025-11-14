@@ -29,7 +29,23 @@
         fr.onload = receivedText;
         fr.readAsText(file);
     }       
-
+console.log("debug1<br/>\n");
+    function sent_count(arr) {
+        var result = 0;
+        for ( const elem of arr) {
+            if ( elem.type == 2 ) result++;
+        }
+        return result;
+    }
+console.log("debug2<br/>\n");
+    function received_count(arr) {
+        var result = 0;
+        for ( const elem of arr) {
+            if ( elem.type == 1 ) result++;
+        }
+        return result;
+    }
+console.log("debug2<br/>\n");
     function receivedText() { 
         var docContents = new Array();
         var text = fr.result.replace('&#5', '\&\#5');
@@ -67,6 +83,12 @@
         // Sort 
         docContents.sort(function(a, b) {
             let checkIfNumber = /^[0-9+]+$/; //正規表現、終始半角数字で1文字以上の文字列を示す
+            if ( sent_count(a.texts) < sent_count(b.texts) ) {
+                return 1;
+            }
+            if ( sent_count(a.texts) > sent_count(b.texts) ) {
+                return -1;
+            }
             if ( checkIfNumber.test(a.name) && ! checkIfNumber.test(b.name) ) {
                 return 1;
             }
@@ -87,10 +109,16 @@
         
         $.each(docContents, function(personIndex, personObject){
             // Start the group member, label with the name
+            var sent_count_value = sent_count(personObject.texts);
+            //var sent_count = 0;
+            //html += "sent_count = " + sent_count;
+            var received_count_value = received_count(personObject.texts);
+            //var received_count_value = 0;
             html += '<div class="panel panel-default"><div class="panel-heading">' +
                 '<h4 class="panel-title"><a data-target="#collapse' + personIndex + 
                 '" data-toggle="collapse" data-parent="#accordion">' +
-                personObject.name + ' - ' + personObject.texts.length + '</a></h4></div><div id="collapse' + 
+                personObject.name + ' - ' + personObject.texts.length + ' (S:' +
+                sent_count_value + ',R:' + received_count_value + ')' + '</a></h4></div><div id="collapse' + 
                 personIndex + '" class="panel-collapse collapse"><div class="panel-body">' + 
                 '<table class="table table-bordered table-condensed table-striped" >' + 
                 '<tr><th>Date</th><th>Status</th><th>Message</th></tr>';
