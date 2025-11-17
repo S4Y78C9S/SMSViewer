@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- jQuery to help make some magic happen -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- Twitter Bootstrap to make it pretty -->
     <!-- Latest compiled and minified CSS -->
@@ -45,11 +45,14 @@ console.log("debug2<br/>\n");
         }
         return result;
     }
-console.log("debug2<br/>\n");
+console.log("debug3<br/>\n");
     function receivedText() { 
         var docContents = new Array();
         var text = fr.result.replace('&#5', '\&\#5');
         $xml = $( $.parseXML( text ) );
+        //text = text.replace("&#10;","\n");
+        text = text.replace("&#10;","KAI");
+        //text = text.replace("&#13;","\n");
         $xml.find("sms").each(function(){
             var var_name = $(this).attr("contact_name");
             if(!var_name || var_name == "(Unknown)") var_name = $(this).attr("address").replace('+1', '');
@@ -107,6 +110,8 @@ console.log("debug2<br/>\n");
         // Form the group
         var html = '<h3>Text Messages</h3><div class="panel-group" id="accordion">';
         
+        /*
+        // original
         $.each(docContents, function(personIndex, personObject){
             // Start the group member, label with the name
             var sent_count_value = sent_count(personObject.texts);
@@ -137,6 +142,61 @@ console.log("debug2<br/>\n");
             //Finish the group member
             html += '<tr><td colspan="3"><a data-target="#collapse' + personIndex + '" data-toggle="collapse" data-parent="#accordion">' +
                 'Close</a></td></tr></table></div></div></div>';
+        });
+        */
+
+
+        // LINE風CSS
+        $.each(docContents, function(personIndex, personObject){
+            // Start the group member, label with the name
+            var sent_count_value = sent_count(personObject.texts);
+            //var sent_count = 0;
+            //html += "sent_count = " + sent_count;
+            var received_count_value = received_count(personObject.texts);
+            //var received_count_value = 0;
+
+
+            html += '<div class="panel panel-default"><div class="panel-heading">' +
+                '<h4 class="panel-title"><a data-target="#collapse' + personIndex + 
+                '" data-toggle="collapse" data-parent="#accordion">' +
+                personObject.name + ' - ' + personObject.texts.length + ' (S:' +
+                sent_count_value + ',R:' + received_count_value + ')' + '</a></h4></div><div id="collapse' + 
+                personIndex + '" class="panel-collapse collapse"><div class="panel-body">';
+
+            html += '<div class="room">';
+            html += '<ul>';
+
+
+            //メッセージ
+            $.each(personObject.texts, function(textIndex, textObject) {
+                var status;
+                if (textObject.type == 1) status = "Received";
+                else if (textObject.type == 2) status = "Sent";
+                else status = "Other";
+                
+                if (textObject.type == 1) {
+                    html += '<li class="chat you">';
+                } else {
+                    html += '<li class="chat me">';
+                }
+                html += '<p class="mes">';
+
+                var msg = textObject.body;
+                msg = msg.replace("&#10;", "<br>\n");
+                msg = msg.replace("&#13;", "<br>\n");
+                msg = msg.replace("KAI", "<br>\n");
+                console.log("msg="+msg);
+
+                html += msg;
+                html += '</p>';
+                html += '</li>';
+            });
+
+
+            html += '</ul>';
+            html += '</div>';
+
+            html += '</div></div></div></div>';
         });
         
         // Finish the group
