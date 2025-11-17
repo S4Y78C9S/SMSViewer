@@ -49,10 +49,10 @@ console.log("debug3<br/>\n");
     function receivedText() { 
         var docContents = new Array();
         var text = fr.result.replace('&#5', '\&\#5');
-        $xml = $( $.parseXML( text ) );
         //text = text.replace("&#10;","\n");
-        text = text.replace("&#10;","KAI");
+        //text = text.replace("&#10;","KAI");
         //text = text.replace("&#13;","\n");
+        $xml = $( $.parseXML( text ) );
         $xml.find("sms").each(function(){
             var var_name = $(this).attr("contact_name");
             if(!var_name || var_name == "(Unknown)") var_name = $(this).attr("address").replace('+1', '');
@@ -182,9 +182,10 @@ console.log("debug3<br/>\n");
                 html += '<p class="mes">';
 
                 var msg = textObject.body;
-                msg = msg.replace("&#10;", "<br>\n");
-                msg = msg.replace("&#13;", "<br>\n");
-                msg = msg.replace("KAI", "<br>\n");
+                //msg = msg.replace("&#10;", "<br>\n");
+                //msg = msg.replace("&#13;", "<br>\n");
+                //msg = msg.replace("KAI", "<br>\n");
+                msg = msg.replace(/\n/g, "<br>\n");
                 console.log("msg="+msg);
 
                 html += msg;
