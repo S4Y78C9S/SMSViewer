@@ -29,8 +29,12 @@ ul,li {
   list-style: none;
 }
 
+#content {
+    max-width: 400px;
+}
+
 .room {
-	width: 400px;      /* チャットルームの幅を指定 */
+	width: 100%;      /* チャットルームの幅を指定 */
 	background: #eee;  /* チャットルームの背景を灰色 */
 	padding: 10px;     /* 余白を10pxキープ */
 }
