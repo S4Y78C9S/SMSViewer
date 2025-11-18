@@ -10,10 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"></script>
 
     <!-- Twitter Bootstrap to make it pretty -->
-<!--
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
--->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
@@ -50,9 +46,6 @@ console.log("debug3<br/>\n");
     function receivedText() { 
         var docContents = new Array();
         var text = fr.result.replace('&#5', '\&\#5');
-        //text = text.replace("&#10;","\n");
-        //text = text.replace("&#10;","KAI");
-        //text = text.replace("&#13;","\n");
         $xml = $( $.parseXML( text ) );
         $xml.find("sms").each(function(){
             var var_name = $(this).attr("contact_name");
@@ -111,40 +104,6 @@ console.log("debug3<br/>\n");
         // Form the group
         var html = '<h3>Text Messages</h3><div class="panel-group" id="accordion">';
         
-        /*
-        // original
-        $.each(docContents, function(personIndex, personObject){
-            // Start the group member, label with the name
-            var sent_count_value = sent_count(personObject.texts);
-            //var sent_count = 0;
-            //html += "sent_count = " + sent_count;
-            var received_count_value = received_count(personObject.texts);
-            //var received_count_value = 0;
-            html += '<div class="panel panel-default"><div class="panel-heading">' +
-                '<h4 class="panel-title"><a data-target="#collapse' + personIndex + 
-                '" data-toggle="collapse" data-parent="#accordion">' +
-                personObject.name + ' - ' + personObject.texts.length + ' (S:' +
-                sent_count_value + ',R:' + received_count_value + ')' + '</a></h4></div><div id="collapse' + 
-                personIndex + '" class="panel-collapse collapse"><div class="panel-body">' + 
-                '<table class="table table-bordered table-condensed table-striped" >' + 
-                '<tr><th>Date</th><th>Status</th><th>Message</th></tr>';
-            
-            //Populate the texts
-            $.each(personObject.texts, function(textIndex, textObject) {
-                var status;
-                if (textObject.type == 1) status = "Received";
-                else if (textObject.type == 2) status = "Sent";
-                else status = "Other";
-                
-                html += '<tr><td class="messageDateCell">' + textObject.readable_date + 
-                '</td><td>' + status + '</td><td>' + textObject.body + '</td></tr>';
-            });
-            
-            //Finish the group member
-            html += '<tr><td colspan="3"><a data-target="#collapse' + personIndex + '" data-toggle="collapse" data-parent="#accordion">' +
-                'Close</a></td></tr></table></div></div></div>';
-        });
-        */
 
 
         // LINE風CSS
@@ -162,8 +121,8 @@ console.log("debug3<br/>\n");
             html += '<h4 class="panel-title">';
             html += '<a href="#collapse' + personIndex + 
                 '" data-bs-toggle="collapse" data-parent="#accordion">' +
-                personObject.name + ' - ' + personObject.texts.length + ' (S:' +
-                sent_count_value + ',R:' + received_count_value + ')' + '</a>';
+                personObject.name + ' - ' + personObject.texts.length + ' (送:' +
+                sent_count_value + ',受:' + received_count_value + ')' + '</a>';
             html += '</h4>';
             html += '</div>'; // panel-heading
             html += '<div id="collapse' + 
@@ -189,9 +148,6 @@ console.log("debug3<br/>\n");
                 html += '<p class="mes">';
 
                 var msg = textObject.body;
-                //msg = msg.replace("&#10;", "<br>\n");
-                //msg = msg.replace("&#13;", "<br>\n");
-                //msg = msg.replace("KAI", "<br>\n");
                 msg = msg.replace(/\n/g, "<br>\n");
                 console.log("msg="+msg);
 
@@ -205,9 +161,11 @@ console.log("debug3<br/>\n");
 
 
             html += '</ul>';
-            html += '</div>';
+            html += '</div>'; // room
 
-            html += '</div></div></div></div>';
+            html += '</div>'; // panel-body
+            html += '</div>'; // collapse
+            html += '</div>'; // panel-default
         });
         
         // Finish the group
