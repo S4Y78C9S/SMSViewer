@@ -1,5 +1,7 @@
 ## SMSViewer
 
+![Screen shot](screenshot.png)
+
 So at the moment, there isn't much to this project. I keep track of a lot of things, my text 
 messages being one of those things. I am a fan of the Android OS and have used a few different Android apps, 
 but recently I've been using 
