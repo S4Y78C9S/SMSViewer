@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<!--File Created By SMS Backup & Restore v10.23.001 on 30/10/2025 15:23:00-->
+<!--
+
+To view this file in a more readable format, visit https://synctech.com.au/view-backup/
+
+-->
+<smses count="2" backup_set="c4d58b49-c7e5-4de4-b0ed-34dea196494d" backup_date="1761805372575" type="full">
+  <sms protocol="0" address="09079743268" date="1764211024000" type="2" subject="null" body="こんにちは&#10;&#10;業務連絡です。&#10;見積を作成しました。" toa="null" sc_toa="null" service_center="null" read="1" status="-1" locked="0" date_sent="0" sub_id="1" readable_date="2025/11/27 11:38:36" contact_name="加藤直人" />
+  <sms protocol="0" address="09079743268" date="1764211025000" type="1" subject="null" body="了解しました。&#10;また連絡ください。" toa="null" sc_toa="null" service_center="+818059980000" read="1" status="-1" locked="0" date_sent="1706322338000" sub_id="1" readable_date="2025/11/27 11:38:37" contact_name="加藤直人" />
+  <sms protocol="0" address="07034835605" date="1764211025000" type="1" subject="null" body="G-231063 があなたの Google 確認コードです。" toa="null" sc_toa="null" service_center="+818059980000" read="1" status="-1" locked="0" date_sent="1706322338000" sub_id="1" readable_date="2025/11/27 11:38:37" contact_name="07034835605" />
+</smses>
