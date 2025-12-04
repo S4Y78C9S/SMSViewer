@@ -77,3 +77,9 @@ ul,li {
   text-align: right;            /* 右寄せにする */
 }
 
+
+/* callviewer用 */
+table, th, td {
+    border: 1px solid;
+}
+

@@ -26,7 +26,6 @@
         fr.onload = receivedText;
         fr.readAsText(file);
     }       
-console.log("debug1<br/>\n");
     function sent_count(arr) {
         var result = 0;
         for ( const elem of arr) {
@@ -34,7 +33,6 @@ console.log("debug1<br/>\n");
         }
         return result;
     }
-console.log("debug2<br/>\n");
     function received_count(arr) {
         var result = 0;
         for ( const elem of arr) {
@@ -42,7 +40,6 @@ console.log("debug2<br/>\n");
         }
         return result;
     }
-console.log("debug3<br/>\n");
     function receivedText() { 
         var docContents = new Array();
         var text = fr.result.replace('&#5', '\&\#5');
