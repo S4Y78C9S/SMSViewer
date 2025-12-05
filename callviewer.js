@@ -31,6 +31,7 @@ function parseXML(text) {
       name: el.getAttribute("contact_name") || "(Unknown)",
       number: el.getAttribute("number") || "(不明)",
       type: el.getAttribute("type"),
+      type_text: typeMap[el.getAttribute("type")].class,
       date: el.getAttribute("readable_date"),
       duration: el.getAttribute("duration")
     });
@@ -46,7 +47,7 @@ function renderList(filter = "") {
   list.innerHTML = "";
 
   calls
-    .filter(c => c.name.includes(filter) || c.number.includes(filter))
+    .filter(c => c.name.includes(filter) || c.number.includes(filter) || c.type_text.includes(filter))
     .forEach(c => {
       const t = typeMap[c.type] || typeMap[3];
 

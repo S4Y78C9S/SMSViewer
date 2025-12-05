@@ -1,6 +1,27 @@
+@charset "UTF-8";
+:root {
+    --bg: #f5f5f5;
+    --text: #111;
+    --bg-container: #ffffff;
+    --number-color: #555;
+    --time-color: #000;
+}
+
+/* ダークモード用のスタイル */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #333;
+        --text: #fff;
+        --bg-container: #223;
+        --number-color: #ccc;
+        --time-color: #fff;
+    }
+}
+
+
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: var(--bg);
   margin: 0;
   padding: 20px;
 }
@@ -8,7 +29,8 @@ body {
 .call-log-container {
   max-width: 450px;
   margin: auto;
-  background: white;
+  background: var(--bg-container);
+  color: var(--text);
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -63,10 +85,15 @@ ul {
 
 .number {
   font-size: 14px;
-  color: #555;
+  color: var(--number-color);
 }
 
 .time {
+  font-size: 12px;
+  color: var(--time-color);
+}
+
+.type {
   font-size: 12px;
   color: #888;
 }
