@@ -1,11 +1,12 @@
 let calls = [];
 
 const typeMap = {
-  1: { icon: "call_received", class: "call-in" },   
-  2: { icon: "call_made", class: "call-out" },
-  3: { icon: "call_missed", class: "call-missed" },
-  5: { icon: "call_received", class: "call-in" },
-  6: { icon: "call_missed", class: "call-missed" }
+  1: { icon: "call_received", class: "call-in", title_text: "受信" },   
+  2: { icon: "call_made", class: "call-out", title_text: "送信" },
+  3: { icon: "call_missed", class: "call-missed", title_text: "出なかった" },
+  4: { icon: "voicemail", class: "call-voicemail", title_text: "ボイスメール" },
+  5: { icon: "close", class: "call-rejected", title_text: "rejected" },
+  6: { icon: "report", class: "call-refused", title_text: "迷惑電話" }
 };
 
 // 秒 → "3分21秒" に整形
@@ -55,7 +56,7 @@ function renderList(filter = "") {
       li.className = "call-item";
 
       li.innerHTML = `
-        <span class="material-icons call-icon ${t.class}">
+        <span class="material-icons call-icon ${t.class}" title="${t.title_text}">
           ${t.icon}
         </span>
         <div class="call-info">

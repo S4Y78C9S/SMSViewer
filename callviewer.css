@@ -102,4 +102,7 @@ ul {
 .call-out    { color: #1e88e5; } /* 発信：青 */
 .call-in     { color: #43a047; } /* 着信：緑 */
 .call-missed { color: #e53935; } /* 不在：赤 */
+.call-voicemail    { color: #1e88e5; } /* ボイスメール：青 */
+.call-rejected { color: #e53935; } /* rejected：赤 */
+.call-refused { color: #e53935; } /* refused：赤 */
 
